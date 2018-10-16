@@ -31,6 +31,7 @@ public class PolygonalLine {
      * @param points массив точек, которыми нужно проинициализировать ломаную линию
      */
     public void setPoints(Point[] points) {
+        this.points.clear();
         for (Point point : points) {
             this.points.add(new Point(point.getX(), point.getY()));
         }
@@ -62,8 +63,13 @@ public class PolygonalLine {
      */
     public double getLength() {
         double lenght = 0;
-        for (int i = 0; i < points.size() - 1; i++) {
-            lenght += points.get(i).getLength(points.get(i + 1));
+        Iterator<Point> i = points.iterator();
+        Point p1 = i.next();
+        Point p2;
+        while (i.hasNext()) {
+            p2 = i.next();
+            lenght += p1.getLength(p2);
+            p1 = p2;
         }
         return lenght;
     }
